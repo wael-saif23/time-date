@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "dart:async";
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,76 +10,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  DateTime time = DateTime.now();
-  String theMonth = DateTime.now().month.toString();
-  int theMonthInt = DateTime.now().month;
-  String theday = DateTime.now().weekday.toString();
-  int thedayInt = DateTime.now().weekday;
-
-  List<String> months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ];
-
-  List<String> days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
+  String theDay = "";
+  String timeOfTheDay = "";
+  String theDate = "";
+String amOrBm = DateFormat("a").format(DateTime.now());
   changeEverySecond() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        time = DateTime.now();
+         theDay = DateFormat("EEEE").format(DateTime.now());
+ timeOfTheDay = DateFormat("HH : mm : ss  a").format(DateTime.now());
+ theDate = DateFormat.yMMMMd().format(DateTime.now());
       });
     });
   }
 
-  changeTheMonth(int index) {
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        theMonth = months[index - 1];
-      });
-    });
-  }
 
-  changeTheday(int index) {
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        theday = days[index - 1];
-      });
-    });
-  }
 
-   hours() {
-    if (time.hour > 12) {
-      return time.hour - 12;
-    } else {
-     return  time.hour;
-    }
-  }
 
-  
+
 
   @override
   void initState() {
     changeEverySecond();
-    changeTheMonth(theMonthInt);
-    changeTheday(thedayInt);
-    hours();
+         theDay ;
+ timeOfTheDay ;
+ theDate ;
     super.initState();
   }
 
@@ -96,28 +52,28 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "today's day is $theday",
+            "today's day is $theDay",
             style: TextStyle(fontSize: 22),
           ),
           SizedBox(
             height: 24,
           ),
           Text(
-            "$theMonth ${time.day}, ${time.year}",
+            theDate,
             style: TextStyle(fontSize: 22),
           ),
           SizedBox(
             height: 24,
-          ),
+          ),  
           Text(
-            "${hours().toString().padLeft(2,"0")} : ${time.minute.toString().padLeft(2,"0")} : ${time.second}",
+            timeOfTheDay,
             style: TextStyle(fontSize: 22),
           ),
           SizedBox(
             height: 24,
-          ),
+          ),     
           Text(
-            time.hour>12? "good day":"good night",
+            amOrBm == "AM" ? "good day":"good night",
             style: TextStyle(fontSize: 22),
           ),
         ],
