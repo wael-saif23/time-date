@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:intl/intl.dart';
 import 'package:time_date_app/the_day_time.dart';
 
@@ -16,12 +15,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+     Timer? startStopTimer;
+    void startBotton() {
+      setState(() {
+        startStopTimer = Timer.periodic(const Duration(seconds: 1), (time) {
+          if (numberOfTime > 0) {
+            numberOfTime--;
+          } else {
+            numberOfTime = 0;
+          }
+        });
+      });
+    }
+
+    stopBotton() {
+      setState(() {
+        
+        Timer(Duration(seconds: 1), () {
+          startStopTimer!.cancel();
+        });
+      });
+    }
   String theDay = "";
   String timeOfTheDay = "";
   String theDate = "";
   String amOrBm = DateFormat("a").format(DateTime.now());
 
-  String numberOfTime = "0";
+  int numberOfTime = 0;
   changeEverySecond() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -34,7 +54,11 @@ class _HomePageState extends State<HomePage> {
 
   pickTime() {
     setState(() {
-      numberOfTime = myControler.text;
+      if (int.parse(myControler.text) <= 0) {
+        numberOfTime = 0;
+      } else {
+        numberOfTime = int.parse(myControler.text);
+      }
     });
   }
 
@@ -44,7 +68,7 @@ class _HomePageState extends State<HomePage> {
     theDay;
     timeOfTheDay;
     theDate;
-    numberOfTime;
+    numberOfTime = 0;
 
     super.initState();
   }
@@ -59,14 +83,10 @@ class _HomePageState extends State<HomePage> {
     }
 
     void cancelBotton() {
-      numberOfTime = "0";
+      numberOfTime = 0;
     }
-    void startBotton() {
-      numberOfTime = "0";
-    }
-     void stopBotton() {
-      numberOfTime = "0";
-    }
+
+ 
 
     TextField tf = TextField(
       controller: myControler,
@@ -120,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                 cancelBotton: cancelBotton,
                 numBotton: numBotton,
                 tf: tf,
-                numberOfTime: numberOfTime,
+                numberOfTime: numberOfTime.toString(),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16, bottom: 16),
