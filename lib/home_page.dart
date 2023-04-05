@@ -61,6 +61,12 @@ class _HomePageState extends State<HomePage> {
     void cancelBotton() {
       numberOfTime = "0";
     }
+    void startBotton() {
+      numberOfTime = "0";
+    }
+     void stopBotton() {
+      numberOfTime = "0";
+    }
 
     TextField tf = TextField(
       controller: myControler,
@@ -109,6 +115,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               CounterDown(
+                startBotton: startBotton,
+                stopBotton: stopBotton,
                 cancelBotton: cancelBotton,
                 numBotton: numBotton,
                 tf: tf,
