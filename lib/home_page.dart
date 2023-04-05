@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   String theDate = "";
   String amOrBm = DateFormat("a").format(DateTime.now());
 
-  String numberOfTime = "";
+  String numberOfTime = "0";
   changeEverySecond() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
@@ -34,10 +34,7 @@ class _HomePageState extends State<HomePage> {
 
   pickTime() {
     setState(() {
-      if (myControler.text.isEmpty) {
-         numberOfTime = "0";
-      }else{numberOfTime = myControler.text;}
-      
+      numberOfTime = myControler.text;
     });
   }
 
@@ -56,8 +53,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    void numBotton() {
+      pickTime();
+      myControler.clear();
+    }
+
+    void cancelBotton() {
+      numberOfTime = "0";
+    }
+
     TextField tf = TextField(
-      onTap: pickTime(),
       controller: myControler,
       maxLines: 1,
       style: TextStyle(fontSize: 20),
@@ -104,6 +109,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               CounterDown(
+                cancelBotton: cancelBotton,
+                numBotton: numBotton,
                 tf: tf,
                 numberOfTime: numberOfTime,
               ),
