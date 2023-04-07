@@ -12,6 +12,9 @@ class CounterDown extends StatelessWidget {
     required this.cancelBotton,
     required this.startBotton,
     required this.stopBotton,
+    required this.resumeBotton,
+    required this.isStartedDownCount,
+    required this.isStopedDownCount, required this.isChooseNum,
   });
   final TextField tf;
   final String numberOfTime;
@@ -19,6 +22,11 @@ class CounterDown extends StatelessWidget {
   final void Function() cancelBotton;
   final void Function() startBotton;
   final void Function() stopBotton;
+
+  final void Function() resumeBotton;
+  final bool isStartedDownCount;
+  final bool isStopedDownCount;
+  final bool isChooseNum;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,8 +50,14 @@ class CounterDown extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-         ControlCounterDown(
-            startBotton: startBotton, stopBotton: stopBotton),
+        ControlCounterDown(
+          isChooseNum: isChooseNum,
+            isStarted: isStartedDownCount,
+            isStoped: isStopedDownCount,
+            resumeBotton: resumeBotton,
+            startBotton: startBotton,
+            stopBotton: stopBotton),
+
       ],
     );
   }

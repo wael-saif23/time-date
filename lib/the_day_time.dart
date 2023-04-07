@@ -15,7 +15,7 @@ final  String theDate ;
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "today's day is $theDay",
+            "day is $theDay",
             style: const TextStyle(fontSize: 22),
           ),
           const SizedBox(
